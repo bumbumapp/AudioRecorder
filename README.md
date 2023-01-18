@@ -14,7 +14,7 @@
 - Add recordings to bookmarks
 - Color themes
 ## Thanks
-[Dmytro Ponomarenko]
+[Dmytro Ponomarenko](https://github.com/Dimowner/AudioRecorder)
 ### License
 
 ```
