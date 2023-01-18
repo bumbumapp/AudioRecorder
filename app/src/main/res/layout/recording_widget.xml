@@ -12,5 +12,5 @@
 			android:layout_height="wrap_content"
 			android:contentDescription="@string/start_recording"
 			android:background="@color/transparent"
-			android:src="@mipmap/audio_recorder_widget_button"/>
+			android:src="@mipmap/app_logo"/>
 </LinearLayout>

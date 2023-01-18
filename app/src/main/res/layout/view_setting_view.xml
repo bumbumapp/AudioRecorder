@@ -48,6 +48,7 @@
 				android:visibility="visible"
 				android:layout_gravity="center_vertical|end"
 				android:padding="@dimen/spacing_xsmall"
+			   android:tint="@color/md_yellow_A700"
 				android:src="@drawable/ic_info"/>
 
 	</LinearLayout>

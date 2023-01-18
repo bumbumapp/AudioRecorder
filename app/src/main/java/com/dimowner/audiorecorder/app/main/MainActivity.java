@@ -23,6 +23,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -44,6 +45,7 @@ import com.dimowner.audiorecorder.ARApplication;
 import com.dimowner.audiorecorder.ColorMap;
 import com.dimowner.audiorecorder.IntArrayList;
 import com.dimowner.audiorecorder.R;
+import com.dimowner.audiorecorder.WidgetReceiver;
 import com.dimowner.audiorecorder.app.DecodeService;
 import com.dimowner.audiorecorder.app.DecodeServiceListener;
 import com.dimowner.audiorecorder.app.DownloadService;
@@ -54,7 +56,6 @@ import com.dimowner.audiorecorder.app.info.RecordInfo;
 import com.dimowner.audiorecorder.app.moverecords.MoveRecordsActivity;
 import com.dimowner.audiorecorder.app.records.RecordsActivity;
 import com.dimowner.audiorecorder.app.settings.SettingsActivity;
-import com.dimowner.audiorecorder.app.welcome.WelcomeActivity;
 import com.dimowner.audiorecorder.app.widget.RecordingWaveformView;
 import com.dimowner.audiorecorder.app.widget.WaveformViewNew;
 import com.dimowner.audiorecorder.audio.AudioDecoder;
@@ -159,7 +160,6 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		setTheme(colorMap.getAppThemeResource());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		waveformView = findViewById(R.id.record);
 		recordingWaveformView = findViewById(R.id.recording_view);
 		txtProgress = findViewById(R.id.txt_progress);
@@ -525,8 +525,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 
 	@Override
 	public void startWelcomeScreen() {
-		startActivity(WelcomeActivity.getStartIntent(getApplicationContext()));
-		finish();
+
 	}
 
 	@Override

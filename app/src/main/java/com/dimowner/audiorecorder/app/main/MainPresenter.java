@@ -322,11 +322,7 @@ public class MainPresenter implements MainContract.UserActionsListener {
 
 	@Override
 	public void checkFirstRun() {
-		if (prefs.isFirstRun()) {
-			if (view != null) {
-				view.startWelcomeScreen();
-			}
-		}
+
 	}
 
 	@Override

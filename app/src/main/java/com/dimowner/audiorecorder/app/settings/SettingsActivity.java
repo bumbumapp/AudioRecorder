@@ -137,11 +137,9 @@ public class SettingsActivity extends Activity implements SettingsContract.View,
 		migratePublicStoragePanel.setOnClickListener(this);
 		txtLocation.setOnClickListener(this);
 		findViewById(R.id.btnBack).setOnClickListener(this);
-		TextView txtAbout = findViewById(R.id.txtAbout);
-		txtAbout.setText(getAboutContent());
+
 		findViewById(R.id.btnTrash).setOnClickListener(this);
-		findViewById(R.id.btnRate).setOnClickListener(this);
-		findViewById(R.id.btnRequest).setOnClickListener(this);
+
 		panelPublicDir = findViewById(R.id.panelPublicDir);
 		txtFileBrowser = findViewById(R.id.btn_file_browser);
 		txtFileBrowser.setOnClickListener(this);
@@ -337,13 +335,9 @@ public class SettingsActivity extends Activity implements SettingsContract.View,
 			presenter.onRecordsLocationClick();
 		} else if (id == R.id.btn_file_browser) {
 			startActivity(FileBrowserActivity.getStartIntent(getApplicationContext()));
-		} else if (id == R.id.btnRate) {
-			rateApp();
 		} else if (id == R.id.btnReset) {
 			presenter.resetSettings();
 			presenter.loadSettings();
-		} else if (id == R.id.btnRequest) {
-			requestFeature();
 		}
 	}
 

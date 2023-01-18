@@ -20,14 +20,19 @@
         android:name=".ARApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="@bool/useHardwareAcceleration"
-        android:icon="@mipmap/audio_recorder_logo"
+        android:icon="@drawable/voicerecorder"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/audio_recorder_logo"
+        android:roundIcon="@drawable/voicerecorder"
         android:theme="@style/AppTheme">
         <receiver
             android:name=".RecordingWidget"
             android:exported="true">
             <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF"></action>
+                <action android:name="android.intent.action.SCREEN_ON"></action>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN"></action>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
@@ -39,10 +44,10 @@
         <activity
             android:name=".app.main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -71,9 +76,7 @@
         <activity
             android:name=".app.welcome.WelcomeActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".app.setup.SetupActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.moverecords.MoveRecordsActivity"
             android:screenOrientation="portrait" />
@@ -87,7 +90,7 @@
         <service android:name=".app.DecodeService" />
         <service android:name=".app.moverecords.MoveRecordsService" />
 
-        <receiver android:name=".WidgetReceiver" />
+        <receiver android:name=".WidgetReceiver"/>
         <receiver android:name=".app.RecordingService$StopRecordingReceiver" />
         <receiver android:name=".app.PlaybackService$StopPlaybackReceiver" />
         <receiver android:name=".app.DownloadService$StopDownloadReceiver" />

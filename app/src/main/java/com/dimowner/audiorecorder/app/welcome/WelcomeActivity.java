@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.dimowner.audiorecorder.ARApplication;
 import com.dimowner.audiorecorder.R;
-import com.dimowner.audiorecorder.app.setup.SetupActivity;
+import com.dimowner.audiorecorder.app.main.MainActivity;
 import com.dimowner.audiorecorder.util.AndroidUtils;
 
 import androidx.annotation.Nullable;
@@ -64,7 +64,7 @@ public class WelcomeActivity extends Activity implements WelcomeContract.View {
 		actionButton = findViewById(R.id.btn_action);
 		actionButton.setOnClickListener(v -> {
 //				if (pager.getCurrentItem() == adapter.getItemCount() - 1) {
-				startActivity(SetupActivity.getStartIntent(getApplicationContext()));
+				startActivity(MainActivity.getStartIntent(getApplicationContext()));
 				finish();
 //				} else {
 //					pagerPager.advance();
