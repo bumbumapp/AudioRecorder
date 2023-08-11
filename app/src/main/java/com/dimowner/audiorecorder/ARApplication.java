@@ -28,6 +28,7 @@ import android.telephony.TelephonyManager;
 import com.dimowner.audiorecorder.audio.player.PlayerContractNew;
 import com.dimowner.audiorecorder.data.Prefs;
 import com.dimowner.audiorecorder.util.AndroidUtils;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 //import com.google.firebase.FirebaseApp;
 
 import timber.log.Timber;
@@ -82,7 +83,7 @@ public class ARApplication extends Application {
 			});
 		}
 		super.onCreate();
-
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 		PACKAGE_NAME = getApplicationContext().getPackageName();
 		applicationHandler = new Handler(getApplicationContext().getMainLooper());
 		screenWidthDp = AndroidUtils.pxToDp(AndroidUtils.getScreenWidth(getApplicationContext()));

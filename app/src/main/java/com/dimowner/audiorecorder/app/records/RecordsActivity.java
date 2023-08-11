@@ -58,6 +58,11 @@ import com.dimowner.audiorecorder.util.AndroidUtils;
 import com.dimowner.audiorecorder.util.AnimationUtil;
 import com.dimowner.audiorecorder.util.FileUtil;
 import com.dimowner.audiorecorder.util.TimeUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +176,7 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 		waveformView.showTimeline(false);
 
 		txtName.setOnClickListener(this);
-
+     loadBanners();
 		playProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -530,6 +535,17 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 		}
 		AndroidUtils.shareAudioFiles(getApplicationContext(), share);
 		cancelMultiSelect();
+	}
+	private void loadBanners() {
+
+		MobileAds.initialize(this, new OnInitializationCompleteListener() {
+			@Override
+			public void onInitializationComplete(InitializationStatus initializationStatus) {
+			}
+		});
+		AdView mAdView = findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
 	}
 
 	private void downloadSelectedRecords() {

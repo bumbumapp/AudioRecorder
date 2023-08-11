@@ -20,9 +20,9 @@
         android:name=".ARApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="@bool/useHardwareAcceleration"
-        android:icon="@drawable/voicerecorder"
+        android:icon="@mipmap/app_logo_foreground"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/voicerecorder"
+        android:roundIcon="@mipmap/app_logo_round"
         android:theme="@style/AppTheme">
         <receiver
             android:name=".RecordingWidget"
@@ -106,6 +106,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/banner_app_id"/>
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="true" />
     </application>
 
 </manifest>
