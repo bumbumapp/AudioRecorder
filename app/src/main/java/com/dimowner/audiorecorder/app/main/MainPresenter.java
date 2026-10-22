@@ -871,7 +871,7 @@ public class MainPresenter implements MainContract.UserActionsListener {
 		Cursor cursor = context.getContentResolver().query(uri, null, null, null, null, null);
 		try {
 			if (cursor != null && cursor.moveToFirst()) {
-				String name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+				String name = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
 //				TODO: find a better way to extract file extension.
 				if (!name.contains(".")) {
 					return name + ".m4a";

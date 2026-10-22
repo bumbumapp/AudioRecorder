@@ -79,23 +79,23 @@ public class RecordsDataSource extends DataSource<Record> {
 	@Override
 	public Record recordToItem(Cursor cursor) {
 		return new Record(
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_ID)),
-				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_NAME)),
-				cursor.getLong(cursor.getColumnIndex(SQLiteHelper.COLUMN_DURATION)),
-				cursor.getLong(cursor.getColumnIndex(SQLiteHelper.COLUMN_CREATION_DATE)),
-				cursor.getLong(cursor.getColumnIndex(SQLiteHelper.COLUMN_DATE_ADDED)),
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_ID)),
+				cursor.getString(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_NAME)),
+				cursor.getLong(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_DURATION)),
+				cursor.getLong(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_CREATION_DATE)),
+				cursor.getLong(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_DATE_ADDED)),
 				Long.MAX_VALUE, //Record removed date not needed here.
-				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_PATH)),
-				cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_FORMAT)),
-				cursor.getLong(cursor.getColumnIndex(SQLiteHelper.COLUMN_SIZE)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_SAMPLE_RATE)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_CHANNEL_COUNT)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_BITRATE)),
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_BOOKMARK)) != 0,
-				cursor.getInt(cursor.getColumnIndex(SQLiteHelper.COLUMN_WAVEFORM_PROCESSED)) != 0,
-				cursor.getBlob(cursor.getColumnIndex(SQLiteHelper.COLUMN_DATA))
+				cursor.getString(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_PATH)),
+				cursor.getString(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_FORMAT)),
+				cursor.getLong(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_SIZE)),
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_SAMPLE_RATE)),
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_CHANNEL_COUNT)),
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_BITRATE)),
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_BOOKMARK)) != 0,
+				cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_WAVEFORM_PROCESSED)) != 0,
+				cursor.getBlob(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_DATA))
 //				Record.stringToArray(
-//						cursor.getString(cursor.getColumnIndex(SQLiteHelper.COLUMN_DATA_STR)))
+//						cursor.getString(cursor.getColumnIndexOrThrow(SQLiteHelper.COLUMN_DATA_STR)))
 		);
 	}
 }

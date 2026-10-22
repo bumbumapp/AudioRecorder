@@ -1,5 +1,8 @@
 package com.dimowner.audiorecorder.app.moverecords
 
+import com.dimowner.audiorecorder.util.PlatformCompat
+import android.content.pm.ServiceInfo
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -230,7 +233,7 @@ class MoveRecordsService : Service() {
 		// Create notification default intent.
 		val intent = Intent(applicationContext, MainActivity::class.java)
 		intent.flags = Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
-		val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
+		val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PlatformCompat.PENDING_INTENT_FLAGS)
 
 		// Create notification builder.
 		builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -249,7 +252,7 @@ class MoveRecordsService : Service() {
 		builder.setOnlyAlertOnce(true)
 		builder.setDefaults(0)
 		builder.setSound(null)
-		startForeground(NOTIF_ID, builder.build())
+		PlatformCompat.startForeground(this, NOTIF_ID, builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 	}
 
 	fun stopService() {
@@ -260,7 +263,7 @@ class MoveRecordsService : Service() {
 	private fun getCancelMovePendingIntent(context: Context): PendingIntent {
 		val intent = Intent(context, StopMoveRecordsReceiver::class.java)
 		intent.action = ACTION_CANCEL_MOVE_RECORDS
-		return PendingIntent.getBroadcast(context, 318, intent, 0)
+		return PendingIntent.getBroadcast(context, 318, intent, PlatformCompat.PENDING_INTENT_FLAGS)
 	}
 
 	@RequiresApi(Build.VERSION_CODES.O)

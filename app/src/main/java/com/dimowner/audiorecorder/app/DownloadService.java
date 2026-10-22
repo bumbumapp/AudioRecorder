@@ -16,6 +16,9 @@
 
 package com.dimowner.audiorecorder.app;
 
+import android.content.pm.ServiceInfo;
+import com.dimowner.audiorecorder.util.PlatformCompat;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -205,8 +208,8 @@ public class DownloadService extends Service {
 		// Create notification default intent.
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-		contentPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-		startForeground(NOTIF_ID, buildNotification());
+		contentPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PlatformCompat.PENDING_INTENT_FLAGS);
+		PlatformCompat.startForeground(this, NOTIF_ID, buildNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
 	}
 
 	private Notification buildNotification() {
@@ -239,7 +242,7 @@ public class DownloadService extends Service {
 	protected PendingIntent getPendingSelfIntent(Context context, String action) {
 		Intent intent = new Intent(context, StopDownloadReceiver.class);
 		intent.setAction(action);
-		return PendingIntent.getBroadcast(context, 10, intent, 0);
+		return PendingIntent.getBroadcast(context, 10, intent, PlatformCompat.PENDING_INTENT_FLAGS);
 	}
 
 	@RequiresApi(Build.VERSION_CODES.O)

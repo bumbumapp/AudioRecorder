@@ -21,7 +21,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
+import androidx.annotation.NonNull;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -83,7 +85,11 @@ public class ARApplication extends Application {
 			});
 		}
 		super.onCreate();
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+		registerActivityLifecycleCallbacks(new EdgeToEdgeCallbacks());
+		if (!com.google.firebase.FirebaseApp.getApps(this).isEmpty()) {
+			// Only when the build includes google-services.json; otherwise getInstance() throws.
+			FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+		}
 		PACKAGE_NAME = getApplicationContext().getPackageName();
 		applicationHandler = new Handler(getApplicationContext().getMainLooper());
 		screenWidthDp = AndroidUtils.pxToDp(AndroidUtils.getScreenWidth(getApplicationContext()));
@@ -96,7 +102,8 @@ public class ARApplication extends Application {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(AUDIO_BECOMING_NOISY);
 		audioOutputChangeReceiver = new AudioOutputChangeReceiver();
-		registerReceiver(audioOutputChangeReceiver, intentFilter);
+		androidx.core.content.ContextCompat.registerReceiver(this, audioOutputChangeReceiver, intentFilter,
+				androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED);
 
 		try {
 			TelephonyManager mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -140,4 +147,20 @@ public class ARApplication extends Application {
 			super.onCallStateChanged(state, incomingNumber);
 		}
 	};
+
+	/** Applies system bar insets to every activity (edge-to-edge is enforced when targeting API 35+). */
+	private static class EdgeToEdgeCallbacks implements ActivityLifecycleCallbacks {
+		@Override public void onActivityPostCreated(@NonNull android.app.Activity activity, Bundle savedInstanceState) {
+			if (!(activity instanceof com.dimowner.audiorecorder.app.TransparentRecordingActivity)) {
+				com.dimowner.audiorecorder.app.EdgeToEdgeInsets.apply(activity);
+			}
+		}
+		@Override public void onActivityCreated(@NonNull android.app.Activity a, Bundle b) { }
+		@Override public void onActivityStarted(@NonNull android.app.Activity a) { }
+		@Override public void onActivityResumed(@NonNull android.app.Activity a) { }
+		@Override public void onActivityPaused(@NonNull android.app.Activity a) { }
+		@Override public void onActivityStopped(@NonNull android.app.Activity a) { }
+		@Override public void onActivitySaveInstanceState(@NonNull android.app.Activity a, @NonNull Bundle b) { }
+		@Override public void onActivityDestroyed(@NonNull android.app.Activity a) { }
+	}
 }

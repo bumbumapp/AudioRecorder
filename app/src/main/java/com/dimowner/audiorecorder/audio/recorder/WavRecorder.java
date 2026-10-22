@@ -109,7 +109,7 @@ public class WavRecorder implements RecorderContract.Recorder {
 						AudioFormat.ENCODING_PCM_16BIT,
 						bufferSize
 				);
-			} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException | SecurityException e) {
 				Timber.e(e, "sampleRate = " + sampleRate + " channel = " + channel + " bufferSize = " + bufferSize);
 				if (recorder != null) {
 					recorder.release();

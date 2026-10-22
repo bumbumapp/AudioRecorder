@@ -1,5 +1,8 @@
 package com.dimowner.audiorecorder
 
+import com.dimowner.audiorecorder.util.PlatformCompat
+import android.content.pm.ServiceInfo
+
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -46,7 +49,7 @@ internal fun updateAppWidget(
 
  fun getRecordingPendingIntent(context: Context): PendingIntent {
 	val intent = Intent(context, WidgetReceiver::class.java)
-	return PendingIntent.getBroadcast(context, 11, intent, 0)
+	return PendingIntent.getBroadcast(context, 11, intent, PlatformCompat.PENDING_INTENT_FLAGS)
 }
 
 class WidgetReceiver : BroadcastReceiver() {
