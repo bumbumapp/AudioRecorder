@@ -34,6 +34,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ import com.dimowner.audiorecorder.app.info.RecordInfo;
 import com.dimowner.audiorecorder.app.moverecords.MoveRecordsActivity;
 import com.dimowner.audiorecorder.app.records.RecordsActivity;
 import com.dimowner.audiorecorder.app.settings.SettingsActivity;
+import com.dimowner.audiorecorder.app.AdsHelper;
 import com.dimowner.audiorecorder.app.widget.RecordingWaveformView;
 import com.dimowner.audiorecorder.app.widget.WaveformViewNew;
 import com.dimowner.audiorecorder.audio.AudioDecoder;
@@ -70,16 +72,6 @@ import com.dimowner.audiorecorder.util.AndroidUtils;
 import com.dimowner.audiorecorder.util.AnimationUtil;
 import com.dimowner.audiorecorder.util.FileUtil;
 import com.dimowner.audiorecorder.util.TimeUtils;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 import java.io.File;
 import java.util.List;
@@ -97,6 +89,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 
 	public static final int REQ_CODE_REC_AUDIO_AND_WRITE_EXTERNAL = 101;
 	public static final int REQ_CODE_RECORD_AUDIO = 303;
+	public static final int REQ_CODE_POST_NOTIFICATIONS = 310;
 	public static final int REQ_CODE_WRITE_EXTERNAL_STORAGE = 404;
 	public static final int REQ_CODE_READ_EXTERNAL_STORAGE_IMPORT = 405;
 	public static final int REQ_CODE_READ_EXTERNAL_STORAGE_PLAYBACK = 406;
@@ -127,7 +120,6 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 	private ColorMap colorMap;
 	private FileRepository fileRepository;
 	private ColorMap.OnThemeColorChangeListener onThemeColorChangeListener;
-	private InterstitialAd mInterstitialAd;
 
 	private final ServiceConnection connection = new ServiceConnection() {
 
@@ -215,8 +207,15 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		btnImport.setOnClickListener(this);
 		txtName.setOnClickListener(this);
 		space = getResources().getDimension(R.dimen.spacing_xnormal);
-		loadBanners();
-		loadInterstitialads();
+		final ViewGroup adContainer = findViewById(R.id.ad_container);
+		AdsHelper.gatherConsent(this, () -> {
+			AdsHelper.loadBanner(this, adContainer, getString(R.string.banner_id));
+			AdsHelper.preloadInterstitial(this, getString(R.string.interstial_id));
+			findViewById(R.id.btn_privacy_options).setVisibility(
+					AdsHelper.isPrivacyOptionsRequired(this) ? View.VISIBLE : View.GONE);
+		});
+		findViewById(R.id.btn_privacy_options).setOnClickListener(v -> AdsHelper.showPrivacyOptions(this));
+		requestNotificationPermissionIfNeeded();
 		playProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -284,38 +283,12 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		}
 	}
 
-	private void loadInterstitialads() {
-		AdRequest adRequest = new AdRequest.Builder().build();
-
-		InterstitialAd.load(this,getString(R.string.interstial_id), adRequest,
-				new InterstitialAdLoadCallback() {
-					@Override
-					public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-						// The mInterstitialAd reference will be null until
-						// an ad is loaded.
-						mInterstitialAd = interstitialAd;
-						Log.i(TAG, "onAdLoaded");
-					}
-
-					@Override
-					public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-						// Handle the error
-						Log.d(TAG, loadAdError.toString());
-						mInterstitialAd = null;
-					}
-				});
-	}
-
-	private void loadBanners() {
-
-		MobileAds.initialize(this, new OnInitializationCompleteListener() {
-			@Override
-			public void onInitializationComplete(InitializationStatus initializationStatus) {
-			}
-		});
-		AdView mAdView = findViewById(R.id.adView);
-		AdRequest adRequest = new AdRequest.Builder().build();
-		mAdView.loadAd(adRequest);
+	/** Android 13+: recording/playback notifications need POST_NOTIFICATIONS. */
+	private void requestNotificationPermissionIfNeeded() {
+		if (Build.VERSION.SDK_INT >= 33
+				&& checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+			requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQ_CODE_POST_NOTIFICATIONS);
+		}
 	}
 
 
@@ -400,40 +373,6 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		}
 	}
 
-	private void stopAds(long id, File file, boolean showCheckbox) {
-		mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
-			@Override
-			public void onAdClicked() {
-				// Called when a click is recorded for an ad.
-				Log.d(TAG, "Ad was clicked.");
-			}
-
-			@Override
-			public void onAdDismissedFullScreenContent() {
-				setRecordName(id, file, showCheckbox);
-				loadInterstitialads();
-			}
-
-			@Override
-			public void onAdFailedToShowFullScreenContent(AdError adError) {
-				// Called when ad fails to show.
-				Log.e(TAG, "Ad failed to show fullscreen content.");
-				mInterstitialAd = null;
-			}
-
-			@Override
-			public void onAdImpression() {
-				// Called when an impression is recorded for an ad.
-				Log.d(TAG, "Ad recorded an impression.");
-			}
-
-			@Override
-			public void onAdShowedFullScreenContent() {
-				// Called when ad is shown.
-				Log.d(TAG, "Ad showed fullscreen content.");
-			}
-		});
-	}
 
 	private void startFileSelector() {
 		Intent intent_upload = new Intent();
@@ -597,12 +536,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 
 	@Override
 	public void askRecordingNewName(long id, File file,  boolean showCheckbox) {
-		if (mInterstitialAd != null) {
-			mInterstitialAd.show(MainActivity.this);
-			stopAds(id,file,showCheckbox);
-		} else {
-			setRecordName(id, file, showCheckbox);
-		}
+		// Natural break after a recording: capped interstitial, then the rename dialog.
+		AdsHelper.showInterstitialIfReady(this, getString(R.string.interstial_id),
+				() -> setRecordName(id, file, showCheckbox));
 
 	}
 
@@ -895,6 +831,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 	}
 
 	private boolean checkStoragePermissionDownload() {
+		if (!com.dimowner.audiorecorder.util.PlatformCompat.needsLegacyStoragePermission()) {
+			return true;
+		}
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
 					&& checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -910,6 +849,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 	}
 
 	private boolean checkStoragePermissionImport() {
+		if (!com.dimowner.audiorecorder.util.PlatformCompat.needsLegacyStoragePermission()) {
+			return true;
+		}
 		if (presenter.isStorePublic()) {
 			if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -927,6 +869,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 	}
 
 	private boolean checkStoragePermissionPlayback() {
+		if (!com.dimowner.audiorecorder.util.PlatformCompat.needsLegacyStoragePermission()) {
+			return true;
+		}
 		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
 					&& checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -952,6 +897,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 	}
 
 	private boolean checkStoragePermission2() {
+		if (!com.dimowner.audiorecorder.util.PlatformCompat.needsLegacyStoragePermission()) {
+			return true;
+		}
 		if (presenter.isStorePublic()) {
 			if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

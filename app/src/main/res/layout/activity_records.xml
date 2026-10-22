@@ -22,7 +22,7 @@
 		tools:viewBindingIgnore="true"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_above="@+id/adView"
+		android:layout_above="@+id/ad_container"
 		xmlns:tools="http://schemas.android.com/tools">
 
 		<androidx.recyclerview.widget.RecyclerView
@@ -421,16 +421,10 @@
 		</com.dimowner.audiorecorder.app.widget.TouchLayout>
 
 	</FrameLayout>
-	<com.google.android.gms.ads.AdView
-		xmlns:ads="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/adView"
-		android:layout_width="wrap_content"
+	<FrameLayout
+		android:id="@+id/ad_container"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		ads:adSize="FULL_BANNER"
-		android:layout_centerHorizontal="true"
-		android:layout_alignParentBottom="true"
-		ads:adUnitId="@string/banner_id">
-	</com.google.android.gms.ads.AdView>
+		android:layout_alignParentBottom="true" />
 </RelativeLayout>
 

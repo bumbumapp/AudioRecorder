@@ -285,7 +285,5 @@
 	</string-array>
 
 	<string name="app_widget_description">Start recording widget</string>
-    <string name="banner_app_id">ca-app-pub-8444865753152507~7775906839</string>
-    <string name="banner_id">ca-app-pub-8444865753152507/7160280427</string>
-    <string name="interstial_id">ca-app-pub-8444865753152507/2423244479</string>
+	<string name="privacy_options">Privacy options</string>
 </resources>

@@ -16,6 +16,8 @@
 
 package com.dimowner.audiorecorder.app.records;
 
+import com.dimowner.audiorecorder.app.AdsHelper;
+import android.view.ViewGroup;
 import android.Manifest;
 import android.animation.Animator;
 import android.app.Activity;
@@ -58,11 +60,6 @@ import com.dimowner.audiorecorder.util.AndroidUtils;
 import com.dimowner.audiorecorder.util.AnimationUtil;
 import com.dimowner.audiorecorder.util.FileUtil;
 import com.dimowner.audiorecorder.util.TimeUtils;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -537,15 +534,8 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 		cancelMultiSelect();
 	}
 	private void loadBanners() {
-
-		MobileAds.initialize(this, new OnInitializationCompleteListener() {
-			@Override
-			public void onInitializationComplete(InitializationStatus initializationStatus) {
-			}
-		});
-		AdView mAdView = findViewById(R.id.adView);
-		AdRequest adRequest = new AdRequest.Builder().build();
-		mAdView.loadAd(adRequest);
+		ViewGroup adContainer = findViewById(R.id.ad_container);
+		AdsHelper.gatherConsent(this, () -> AdsHelper.loadBanner(this, adContainer, getString(R.string.banner_id)));
 	}
 
 	private void downloadSelectedRecords() {
