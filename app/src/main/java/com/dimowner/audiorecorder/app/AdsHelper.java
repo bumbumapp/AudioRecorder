@@ -29,8 +29,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class AdsHelper {
 
-    /** Minimum time between two interstitials (and between app start and the first one). */
-    public static final long INTERSTITIAL_MIN_INTERVAL_MS = 60_000L;
+    /** Interstitial only after a finished recording; at most one per 8 minutes (and none in the first 8 after start). */
+    public static final long INTERSTITIAL_MIN_INTERVAL_MS = 8 * 60_000L;
 
     private static final AtomicBoolean mobileAdsStarted = new AtomicBoolean(false);
     private static InterstitialAd interstitialAd;

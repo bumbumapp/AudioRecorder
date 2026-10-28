@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Record button, idle / paused: soft white ring around a coral dot. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="84dp"
+    android:height="84dp"
+    android:viewportWidth="84"
+    android:viewportHeight="84">
+    <path
+        android:strokeColor="#33FFFFFF"
+        android:strokeWidth="3"
+        android:pathData="M42,4.5a37.5,37.5 0,1 1,0 75a37.5,37.5 0,1 1,0 -75z" />
+    <path
+        android:fillColor="@color/rec_accent"
+        android:pathData="M42,13a29,29 0,1 1,0 58a29,29 0,1 1,0 -58z" />
+</vector>

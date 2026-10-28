@@ -24,7 +24,7 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		tools:viewBindingIgnore="true"
 		android:orientation="vertical"
-		android:background="@color/white"
+		android:background="@drawable/dialog_surface"
 		android:paddingStart="@dimen/spacing_xnormal"
 		android:paddingEnd="@dimen/spacing_xnormal"
 		android:paddingTop="@dimen/spacing_xnormal"
@@ -36,7 +36,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="@dimen/spacing_normal"
-			android:textColor="@color/md_black_1000"
+			android:textColor="@color/dialog_text"
 			android:drawablePadding="16dp"
 			tools:text="Dialog Title"
 			android:textAppearance="@style/TextAppearance.DialogTitle" />
@@ -48,7 +48,7 @@
 			android:layout_marginBottom="@dimen/spacing_normal"
 			android:layout_marginTop="@dimen/spacing_normal"
 			android:textSize="@dimen/text_xmedium"
-			android:textColor="@color/md_black_1000"
+			android:textColor="@color/dialog_text"
 			tools:text="Please allow!"
 			android:textAppearance="@style/TextAppearance.DialogContent" />
 

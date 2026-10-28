@@ -501,6 +501,7 @@ public class AndroidUtils {
 		}
 		dialogBuilder.setView(view);
 		AlertDialog alertDialog = dialogBuilder.create();
+		transparentWindow(alertDialog);
 		if (negativeBtnListener != null) {
 			Button negativeBtn = view.findViewById(R.id.dialog_negative_btn);
 			if (negativeBtnText != null) {
@@ -558,6 +559,7 @@ public class AndroidUtils {
 
 		dialogBuilder.setView(view);
 		AlertDialog alertDialog = dialogBuilder.create();
+		transparentWindow(alertDialog);
 		if (negativeBtnListener != null) {
 			Button negativeBtn = view.findViewById(R.id.dialog_negative_btn);
 			negativeBtn.setOnClickListener(v -> {
@@ -607,6 +609,7 @@ public class AndroidUtils {
 				dialog.dismiss();
 			});
 			dialog.setContentView(view);
+			transparentWindow(dialog);
 			dialog.show();
 		}
 	}
@@ -624,5 +627,12 @@ public class AndroidUtils {
 
 	public interface OnSetNameClickListener {
 		void onClick(String name);
+	}
+
+	/** Lets the rounded dark dialog layout show instead of the platform's white window. */
+	private static void transparentWindow(Dialog dialog) {
+		if (dialog.getWindow() != null) {
+			dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+		}
 	}
 }

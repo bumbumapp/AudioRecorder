@@ -55,9 +55,13 @@
 	<color name="md_green_500">#4CAF50</color>
 	<color name="md_green_600">#43A047</color>
 	<!--yellow -->
-	<color name="md_yellow_A700">#ffd600</color>
-	<color name="md_yellow_800F">#f59a05</color>
-	<color name="md_yellow_900F">#ec7105</color>
+	<!-- Brand accent (record coral); the old yellow name is kept so every accent use follows it. -->
+	<color name="rec_accent">#FF5A5F</color>
+	<color name="dialog_surface">#23262D</color>
+	<color name="dialog_text">#F2F3F5</color>
+	<color name="md_yellow_A700">@color/rec_accent</color>
+	<color name="md_yellow_800F">@color/rec_accent</color>
+	<color name="md_yellow_900F">#E04A50</color>
 	<!--amber-->
 	<color name="md_amber_800">#FF8F00</color>
 	<color name="md_amber_900">#FF6F00</color>
@@ -82,9 +86,9 @@
 	<color name="md_grey_900x">#111111</color>
 	<color name="md_black_1000">#000000</color>
 
-	<color name="md_blue_gray_700">#161422</color>
-	<color name="md_blue_gray_500">#221f35</color>
-    <color name="blue_ligth">#373553</color>
+	<color name="md_blue_gray_700">#131418</color>
+	<color name="md_blue_gray_500">#1F2128</color>
+    <color name="blue_ligth">#2A2D35</color>
 	<color name="transparent">#00000000</color>
 
 </resources>

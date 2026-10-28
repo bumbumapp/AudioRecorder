@@ -439,7 +439,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		txtName.setText(R.string.recording_progress);
 		txtZeroTime.setVisibility(View.INVISIBLE);
 		txtDuration.setVisibility(View.INVISIBLE);
-		btnRecord.setImageResource(R.drawable.ic_pause_circle_filled);
+		btnRecord.setImageResource(R.drawable.btn_rec_pause);
 		btnPlay.setEnabled(false);
 		btnImport.setEnabled(false);
 		btnShare.setEnabled(false);
@@ -467,7 +467,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		txtDuration.setVisibility(View.VISIBLE);
 		txtName.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_pencil_small), null);
 //		txtName.setVisibility(View.INVISIBLE);
-		btnRecord.setImageResource(R.drawable.ic_record);
+		btnRecord.setImageResource(R.drawable.btn_rec_idle);
 		btnPlay.setEnabled(true);
 		btnImport.setEnabled(true);
 		btnShare.setEnabled(true);
@@ -498,7 +498,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		btnPlay.setVisibility(View.GONE);
 		btnImport.setVisibility(View.GONE);
 		btnShare.setVisibility(View.GONE);
-		btnRecord.setImageResource(R.drawable.ic_record_rec);
+		btnRecord.setImageResource(R.drawable.btn_rec_idle);
 		btnDelete.setVisibility(View.VISIBLE);
 		btnDelete.setEnabled(true);
 		btnRecordingStop.setVisibility(View.VISIBLE);
@@ -517,7 +517,7 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		txtName.setText(R.string.recording_progress);
 		txtZeroTime.setVisibility(View.INVISIBLE);
 		txtDuration.setVisibility(View.INVISIBLE);
-		btnRecord.setImageResource(R.drawable.ic_pause_circle_filled);
+		btnRecord.setImageResource(R.drawable.btn_rec_pause);
 		btnPlay.setEnabled(false);
 		btnImport.setEnabled(false);
 		btnShare.setEnabled(false);

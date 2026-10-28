@@ -325,7 +325,7 @@
 					android:contentDescription="@string/recording"
 					android:layout_gravity="center"
 					android:scaleType="center"
-					android:src="@drawable/ic_record"/>
+					android:src="@drawable/btn_rec_idle"/>
 
 			<ImageButton
 					android:id="@+id/btn_record_stop"
