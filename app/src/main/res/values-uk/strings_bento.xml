@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="bento_home_title">Диктофон</string>
+	<string name="bento_import">Імпорт аудіо</string>
+	<string name="bento_more">Ще</string>
+	<string name="bento_play">Відтворити</string>
+	<string name="bento_stop">Стоп</string>
+	<string name="bento_record">Запис</string>
+	<string name="greet_morning">Доброго ранку</string>
+	<string name="greet_afternoon">Добрий день</string>
+	<string name="greet_evening">Добрий вечір</string>
+	<string name="bento_section_library">Бібліотека</string>
+	<string name="bento_section_recording">Запис</string>
+	<string name="bento_section_quality">Якість</string>
+	<string name="bento_section_storage">Сховище</string>
+</resources>

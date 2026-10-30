@@ -86,6 +86,11 @@ public class ColorMap {
 				primaryDarkRes = R.color.md_blue_gray_500;
 				playbackPanelBackground = R.drawable.panel_red;
 		}
+		// Bento (2.0): one system light/dark theme for every legacy colour key.
+		appThemeResource = R.style.AppTheme;
+		primaryColorRes = R.color.bento_hero;
+		primaryDarkRes = R.color.bento_primaryContainer;
+		playbackPanelBackground = R.drawable.panel_bento;
 	}
 
 	public void updateColorMap(String colorKey) {

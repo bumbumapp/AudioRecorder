@@ -123,7 +123,7 @@ public class WaveformView extends View {
 		scrubberPaint.setAntiAlias(false);
 		scrubberPaint.setStyle(Paint.Style.STROKE);
 		scrubberPaint.setStrokeWidth(AndroidUtils.dpToPx(2));
-		scrubberPaint.setColor(context.getResources().getColor(R.color.md_yellow_A700));
+		scrubberPaint.setColor(context.getResources().getColor(R.color.ar_on_hero));
 
 		gridPaint = new Paint();
 		gridPaint.setColor(context.getResources().getColor(R.color.md_grey_100_75));

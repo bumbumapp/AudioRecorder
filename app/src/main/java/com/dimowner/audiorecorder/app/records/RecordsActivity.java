@@ -114,7 +114,7 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		colorMap = ARApplication.getInjector().provideColorMap();
-		SimpleWaveformView.setWaveformColorRes(colorMap.getPrimaryColorRes());
+		SimpleWaveformView.setWaveformColorRes(R.color.bento_primary);
 		setTheme(colorMap.getAppThemeResource());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_records);
@@ -450,7 +450,7 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 							if (o > 0) {
 								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 									toolbar.setTranslationZ(getResources().getDimension(R.dimen.toolbar_elevation));
-									toolbar.setBackgroundResource(colorMap.getPrimaryColorRes());
+									toolbar.setBackgroundResource(R.color.md_blue_gray_700);
 								}
 							}
 							adapter.setActiveItem(pos);
@@ -647,7 +647,7 @@ public class RecordsActivity extends Activity implements RecordsContract.View, V
 			inset = -height;
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				toolbar.setTranslationZ(getResources().getDimension(R.dimen.toolbar_elevation));
-				toolbar.setBackgroundResource(colorMap.getPrimaryColorRes());
+				toolbar.setBackgroundResource(R.color.md_blue_gray_700);
 			}
 		}
 

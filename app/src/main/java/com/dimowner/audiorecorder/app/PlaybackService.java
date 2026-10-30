@@ -50,7 +50,9 @@ import timber.log.Timber;
 public class PlaybackService extends Service {
 
 	private final static String CHANNEL_NAME = "Default";
-	private final static String CHANNEL_ID = "com.dimowner.audiorecorder.NotificationId";
+	// Low importance: ongoing record/playback notifications must not pop up as heads-up banners.
+	private final static String CHANNEL_ID = "com.dimowner.audiorecorder.NotificationLow";
+	private final static String OLD_CHANNEL_ID = "com.dimowner.audiorecorder.NotificationId";
 
 	public static final String ACTION_START_PLAYBACK_SERVICE = "ACTION_START_PLAYBACK_SERVICE";
 
@@ -210,9 +212,13 @@ public class PlaybackService extends Service {
 
 	@RequiresApi(Build.VERSION_CODES.O)
 	private void createNotificationChannel(String channelId, String channelName) {
+		if (notificationManager.getNotificationChannel(OLD_CHANNEL_ID) != null) {
+			notificationManager.deleteNotificationChannel(OLD_CHANNEL_ID);
+		}
 		NotificationChannel channel = notificationManager.getNotificationChannel(channelId);
 		if (channel == null) {
-			NotificationChannel chan = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+			NotificationChannel chan = new NotificationChannel(channelId, channelName,
+					CHANNEL_ID.equals(channelId) ? NotificationManager.IMPORTANCE_LOW : NotificationManager.IMPORTANCE_HIGH);
 			chan.setLightColor(Color.BLUE);
 			chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 			chan.setSound(null,null);

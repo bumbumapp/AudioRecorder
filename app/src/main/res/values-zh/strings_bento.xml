@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="bento_home_title">录音机</string>
+	<string name="bento_import">导入音频</string>
+	<string name="bento_more">更多</string>
+	<string name="bento_play">播放</string>
+	<string name="bento_stop">停止</string>
+	<string name="bento_record">录音</string>
+	<string name="greet_morning">早上好</string>
+	<string name="greet_afternoon">下午好</string>
+	<string name="greet_evening">晚上好</string>
+	<string name="bento_section_library">资料库</string>
+	<string name="bento_section_recording">录音</string>
+	<string name="bento_section_quality">音质</string>
+	<string name="bento_section_storage">存储</string>
+</resources>

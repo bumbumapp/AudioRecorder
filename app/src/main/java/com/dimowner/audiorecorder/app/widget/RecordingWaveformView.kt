@@ -79,7 +79,7 @@ class RecordingWaveformView @JvmOverloads constructor(
 		scrubberPaint.isAntiAlias = false
 		scrubberPaint.style = Paint.Style.STROKE
 		scrubberPaint.strokeWidth = AndroidUtils.dpToPx(2)
-		scrubberPaint.color = ContextCompat.getColor(context, R.color.md_yellow_A700)
+		scrubberPaint.color = ContextCompat.getColor(context, R.color.ar_on_hero)
 
 		gridPaint.color = ContextCompat.getColor(context, R.color.md_grey_100_75)
 		gridPaint.strokeWidth = AndroidUtils.dpToPx(1) / 2

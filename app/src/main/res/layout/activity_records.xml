@@ -36,16 +36,23 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:paddingStart="10dp"
+			android:paddingTop="10dp"
+			android:paddingEnd="10dp"
+			android:paddingBottom="10dp"
 			android:orientation="horizontal">
 
 			<ImageButton
 				android:id="@+id/btn_back"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="44dp"
+				android:layout_height="44dp"
+				android:layout_marginStart="6dp"
+				android:layout_marginEnd="6dp"
+				android:scaleType="center"
 				android:contentDescription="@null"
 				android:layout_gravity="start"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_arrow_back"/>
 
 			<LinearLayout
@@ -57,7 +64,8 @@
 				android:orientation="vertical">
 
 				<TextView
-					style="@style/Text.SectionLabel"
+					android:textAppearance="@style/Bento.Text.Headline"
+					android:textSize="26sp"
 					android:id="@+id/txt_title"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -70,8 +78,8 @@
 					android:text="@string/records"
 					/>
 				<TextView
-					style="@style/Text"
 					android:id="@+id/txt_sub_title"
+					android:textAppearance="@style/Bento.Text.BodySmall"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textSize="@dimen/text_normal"
@@ -80,29 +88,33 @@
 					android:gravity="center_vertical"
 					android:layout_marginStart="@dimen/spacing_normal"
 					android:layout_marginBottom="@dimen/spacing_small"
-					android:textColor="@color/text_primary_light"
+					android:textColor="?attr/colorOnSurfaceVariant"
 					tools:text="@string/records"
 					/>
 			</LinearLayout>
 
 			<ImageButton
 				android:id="@+id/btn_sort"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="44dp"
+				android:layout_height="44dp"
+				android:layout_marginStart="6dp"
+				android:layout_marginEnd="6dp"
+				android:scaleType="center"
 				android:contentDescription="@null"
 				android:layout_gravity="center_vertical|end"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_sort"/>
 
 			<ImageButton
 				android:id="@+id/btn_bookmarks"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="44dp"
+				android:layout_height="44dp"
+				android:layout_marginStart="6dp"
+				android:layout_marginEnd="6dp"
+				android:scaleType="center"
 				android:contentDescription="@null"
 				android:layout_gravity="center_vertical|end"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_bookmark_bordered"/>
 
 		</LinearLayout>
@@ -123,12 +135,12 @@
 				android:layout_height="wrap_content"
 				android:contentDescription="@null"
 				android:layout_gravity="start"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_round_close"/>
 
 			<TextView
-				style="@style/Text.SectionLabel"
+				android:textAppearance="@style/Bento.Text.Headline"
+					android:textSize="26sp"
 				android:id="@+id/txt_selected_multi"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -148,8 +160,7 @@
 				android:layout_height="wrap_content"
 				android:contentDescription="@null"
 				android:layout_gravity="center_vertical|end"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_share"/>
 
 			<ImageButton
@@ -158,8 +169,7 @@
 				android:layout_height="wrap_content"
 				android:contentDescription="@null"
 				android:layout_gravity="center_vertical|end"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_save_alt"/>
 
 			<ImageButton
@@ -168,8 +178,7 @@
 				android:layout_height="wrap_content"
 				android:contentDescription="@null"
 				android:layout_gravity="center_vertical|end"
-				android:background="?android:selectableItemBackgroundBorderless"
-				android:padding="@dimen/spacing_normal"
+				android:background="@drawable/ar_square_btn"
 				android:src="@drawable/ic_delete"/>
 
 		</LinearLayout>
@@ -212,9 +221,11 @@
 			android:layout_height="wrap_content"
 			android:clipToPadding="false"
 			android:layout_gravity="bottom"
-			android:layout_marginBottom="2dp"
-			android:layout_marginStart="2dp"
-			android:layout_marginEnd="2dp"
+			android:layout_marginBottom="8dp"
+			android:layout_marginStart="12dp"
+			android:layout_marginEnd="12dp"
+			android:paddingTop="6dp"
+			android:paddingBottom="6dp"
 			android:elevation="@dimen/toolbar_elevation"
 			android:visibility="gone"
 			android:background="@drawable/panel_amber"
@@ -236,12 +247,13 @@
 						android:layout_height="wrap_content"
 						android:layout_gravity="center"
 						android:padding="@dimen/spacing_medium"
-						android:textColor="@color/text_primary_light"
+						android:textColor="@color/ar_on_hero"
 						android:textSize="@dimen/text_xlarge"
-						android:fontFamily="sans-serif-medium"
+						android:fontFamily="@font/jakarta_extrabold"
 						tools:text="00:00:00"/>
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_decoding"
 						android:layout_width="48dp"
 						android:layout_height="wrap_content"
@@ -255,6 +267,7 @@
 						android:src="@drawable/ic_loop" />
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_check_bookmark"
 						android:layout_width="48dp"
 						android:layout_height="40dp"
@@ -297,7 +310,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_gravity="start|bottom"
-						android:textColor="@color/text_primary_light"
+						android:textColor="@color/ar_on_hero"
 						android:layout_marginStart="@dimen/spacing_small"
 						android:textSize="@dimen/text_normal"
 						android:text="@string/zero_time"/>
@@ -308,13 +321,15 @@
 						android:layout_height="wrap_content"
 						android:layout_gravity="bottom|center_horizontal"
 						android:padding="@dimen/spacing_tiny"
-						android:textColor="@color/text_primary_light"
+						android:textColor="@color/ar_on_hero"
 						android:textSize="@dimen/text_xmedium"
 						android:maxLines="2"
 						android:ellipsize="end"
 						android:layout_marginStart="@dimen/spacing_xdouble"
 						android:layout_marginEnd="@dimen/spacing_xdouble"
 						android:drawableEnd="@drawable/ic_pencil_small"
+						android:drawablePadding="6dp"
+						android:drawableTint="@color/ar_on_hero"
 						tools:text="Record 2321"/>
 
 					<TextView
@@ -322,7 +337,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_gravity="end|bottom"
-						android:textColor="@color/text_primary_light"
+						android:textColor="@color/ar_on_hero"
 						android:layout_marginEnd="@dimen/spacing_small"
 						android:textSize="@dimen/text_normal"
 						tools:text="34:56"/>
@@ -335,6 +350,9 @@
 					android:layout_height="wrap_content"
 					android:max="1000"
 					android:progress="20"
+					android:progressBackgroundTint="#66FFFFFF"
+					android:progressTint="@color/ar_on_hero"
+					android:thumbTint="@color/ar_on_hero"
 					/>
 				<LinearLayout
 					android:layout_width="wrap_content"
@@ -345,6 +363,7 @@
 					android:orientation="horizontal">
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_prev"
 						android:layout_width="@dimen/bottom_pnl_small_btn_size2"
 						android:layout_height="@dimen/bottom_pnl_small_btn_size2"
@@ -363,6 +382,7 @@
 						/>
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_delete"
 						android:layout_width="@dimen/bottom_pnl_small_btn_size2"
 						android:layout_height="@dimen/bottom_pnl_small_btn_size2"
@@ -375,6 +395,7 @@
 						android:src="@drawable/ic_delete_forever_36"/>
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_play"
 						android:layout_width="@dimen/bottom_pnl_small_btn_size2"
 						android:layout_height="@dimen/bottom_pnl_small_btn_size2"
@@ -384,10 +405,10 @@
 						android:layout_gravity="center"
 						android:scaleType="center"
 						android:layout_marginEnd="@dimen/spacing_small"
-						android:tint="@color/white"
 						android:src="@drawable/ic_play"/>
 
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_stop"
 						android:layout_width="@dimen/bottom_pnl_small_btn_size2"
 						android:layout_height="@dimen/bottom_pnl_small_btn_size2"
@@ -405,6 +426,7 @@
 						android:layout_weight="1"
 						/>
 					<ImageButton
+						android:tint="@color/ar_on_hero"
 						android:id="@+id/btn_next"
 						android:layout_width="@dimen/bottom_pnl_small_btn_size2"
 						android:layout_height="@dimen/bottom_pnl_small_btn_size2"

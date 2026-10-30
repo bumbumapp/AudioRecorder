@@ -79,7 +79,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import timber.log.Timber;
 
-public class MainActivity extends Activity implements MainContract.View, View.OnClickListener {
+public class MainActivity extends androidx.appcompat.app.AppCompatActivity implements MainContract.View, View.OnClickListener {
 
 // TODO: Fix waveform when long record (there is no waveform)
 // TODO: Ability to scroll up from the bottom of the list
@@ -178,8 +178,9 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		btnRecordingStop = findViewById(R.id.btn_record_stop);
 		btnDelete = findViewById(R.id.btn_record_delete);
 		btnStop = findViewById(R.id.btn_stop);
-		ImageButton btnRecordsList = findViewById(R.id.btn_records_list);
-		ImageButton btnSettings = findViewById(R.id.btn_settings);
+		View btnRecordsList = findViewById(R.id.btn_records_list);
+		View btnSettings = findViewById(R.id.btn_settings);
+		((TextView) findViewById(R.id.txt_greeting)).setText(greetingRes(java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)));
 		btnShare = findViewById(R.id.btn_share);
 		btnImport = findViewById(R.id.btn_import);
 		progressBar = findViewById(R.id.progress);
@@ -206,7 +207,8 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 		btnShare.setOnClickListener(this);
 		btnImport.setOnClickListener(this);
 		txtName.setOnClickListener(this);
-		space = getResources().getDimension(R.dimen.spacing_xnormal);
+		// Bento layout: play and stop sit at opposite ends of the hero strip, no slide needed.
+		space = 0f;
 		final ViewGroup adContainer = findViewById(R.id.ad_container);
 		AdsHelper.gatherConsent(this, () -> {
 			AdsHelper.loadBanner(this, adContainer, getString(R.string.banner_id));
@@ -281,6 +283,13 @@ public class MainActivity extends Activity implements MainContract.View, View.On
 				}
 			}
 		}
+	}
+
+	/** Time-of-day greeting for the Bento header. */
+	static int greetingRes(int hour) {
+		if (hour >= 5 && hour < 12) return R.string.greet_morning;
+		if (hour >= 12 && hour < 18) return R.string.greet_afternoon;
+		return R.string.greet_evening;
 	}
 
 	/** Android 13+: recording/playback notifications need POST_NOTIFICATIONS. */

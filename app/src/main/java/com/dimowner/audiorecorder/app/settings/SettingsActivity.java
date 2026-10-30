@@ -65,7 +65,7 @@ public class SettingsActivity extends Activity implements SettingsContract.View,
 	private TextView txtInformation;
 	private TextView txtLocation;
 	private TextView txtStorageInfo;
-	private TextView txtFileBrowser;
+	private View txtFileBrowser;
 	private TextView btnView;
 	private View migratePublicStoragePanel;
 	private View panelPublicDir;
@@ -214,7 +214,7 @@ public class SettingsActivity extends Activity implements SettingsContract.View,
 		LinearLayout pnlInfo = findViewById(R.id.info_panel);
 		pnlInfo.setBackground(
 				RippleUtils.createShape(
-						ContextCompat.getColor(getApplicationContext(),R.color.white_transparent_88),
+						ContextCompat.getColor(getApplicationContext(),R.color.bento_primaryContainer),
 						getResources().getDimension(R.dimen.spacing_normal)
 				)
 		);

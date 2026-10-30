@@ -64,7 +64,9 @@ import timber.log.Timber;
 public class RecordingService extends Service {
 
 	private final static String CHANNEL_NAME = "Default";
-	private final static String CHANNEL_ID = "com.dimowner.audiorecorder.NotificationId";
+	// Low importance: ongoing record/playback notifications must not pop up as heads-up banners.
+	private final static String CHANNEL_ID = "com.dimowner.audiorecorder.NotificationLow";
+	private final static String OLD_CHANNEL_ID = "com.dimowner.audiorecorder.NotificationId";
 
 	private final static String CHANNEL_NAME_ERRORS = "Errors";
 	private final static String CHANNEL_ID_ERRORS = "com.dimowner.audiorecorder.Errors";
@@ -170,7 +172,7 @@ public class RecordingService extends Service {
 			createNotificationChannel(CHANNEL_ID_ERRORS, CHANNEL_NAME_ERRORS);
 		}
 		NotificationCompat.Builder builder =
-				new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+				new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID_ERRORS)
 						.setSmallIcon(R.drawable.ic_record_rec)
 						.setContentTitle(getApplicationContext().getString(R.string.app_name))
 						.setContentText(getApplicationContext().getString(R.string.error_no_available_space))
@@ -291,9 +293,13 @@ public class RecordingService extends Service {
 
 	@RequiresApi(Build.VERSION_CODES.O)
 	private void createNotificationChannel(String channelId, String channelName) {
+		if (notificationManager.getNotificationChannel(OLD_CHANNEL_ID) != null) {
+			notificationManager.deleteNotificationChannel(OLD_CHANNEL_ID);
+		}
 		NotificationChannel channel = notificationManager.getNotificationChannel(channelId);
 		if (channel == null) {
-			NotificationChannel chan = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+			NotificationChannel chan = new NotificationChannel(channelId, channelName,
+					CHANNEL_ID.equals(channelId) ? NotificationManager.IMPORTANCE_LOW : NotificationManager.IMPORTANCE_HIGH);
 			chan.setLightColor(Color.BLUE);
 			chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 			chan.setSound(null, null);

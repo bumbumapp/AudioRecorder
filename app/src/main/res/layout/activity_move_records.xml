@@ -75,7 +75,7 @@
 				android:paddingVertical="@dimen/spacing_small"
 				android:background="?android:selectableItemBackground"
 				android:gravity="start"
-				android:fontFamily="sans-serif-light"
+				android:fontFamily="@font/jakarta_regular"
 				android:textColor="@color/text_secondary_light"
 				android:textSize="@dimen/text_medium"
 				tools:text="Count: 10" />
@@ -138,7 +138,7 @@
 					android:padding="@dimen/spacing_tiny"
 					android:textColor="@color/text_primary_light"
 					android:textSize="@dimen/text_large"
-					android:fontFamily="sans-serif-medium"
+					android:fontFamily="@font/jakarta_semibold"
 					tools:text="00:00:00"/>
 
 			<FrameLayout

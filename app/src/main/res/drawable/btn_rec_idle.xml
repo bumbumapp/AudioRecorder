@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Record button, idle / paused: soft white ring around a coral dot. -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="84dp"
-    android:height="84dp"
-    android:viewportWidth="84"
-    android:viewportHeight="84">
-    <path
-        android:strokeColor="#33FFFFFF"
-        android:strokeWidth="3"
-        android:pathData="M42,4.5a37.5,37.5 0,1 1,0 75a37.5,37.5 0,1 1,0 -75z" />
-    <path
-        android:fillColor="@color/rec_accent"
-        android:pathData="M42,13a29,29 0,1 1,0 58a29,29 0,1 1,0 -58z" />
+<!-- Bento record button, idle: accent disc with soft halo and a white mic. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="96dp" android:height="96dp" android:viewportWidth="96" android:viewportHeight="96">
+	<path android:fillColor="@color/rec_accent" android:fillAlpha="0.16" android:pathData="M48,0a48,48 0,1 1,0 96a48,48 0,1 1,0 -96z"/>
+	<path android:fillColor="@color/rec_accent" android:pathData="M48,10a38,38 0,1 1,0 76a38,38 0,1 1,0 -76z"/>
+	<group android:translateX="32" android:translateY="32" android:scaleX="1.3333" android:scaleY="1.3333">
+		<path android:fillColor="#FFFFFF" android:pathData="M12,14c1.66,0 2.99,-1.34 2.99,-3L15,5c0,-1.66 -1.34,-3 -3,-3S9,3.34 9,5v6c0,1.66 1.34,3 3,3zM17.3,11c0,3 -2.54,5.1 -5.3,5.1S6.7,14 6.7,11H5c0,3.41 2.72,6.23 6,6.72V21h2v-3.28c3.28,-0.48 6,-3.3 6,-6.72h-1.7z"/>
+	</group>
 </vector>

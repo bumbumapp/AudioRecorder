@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<color name="text_primary_light">#ffffffff</color>
-	<color name="text_primary_light2">#99FFFFFF</color>
-	<color name="text_secondary_light">#b3ffffff</color> <!-- 70% -->
-	<color name="selected_item_color">#30ffffff</color>
+	<color name="text_primary_light">#0E1222</color>
+	<color name="text_primary_light2">#8A5B6275</color>
+	<color name="text_secondary_light">#5B6275</color> <!-- 70% -->
+	<color name="selected_item_color">#14000000</color>
 	<color name="text_primary_dark">#de000000</color> <!-- 87% -->
 	<color name="text_secondary_dark">#8a000000</color> <!-- 54% -->
 
@@ -12,15 +12,15 @@
 	<color name="white">#ffffff</color>
 	<color name="white_transparent_10">#E6FFFFFF</color>
 	<color name="white_transparent_20">#CDFFFFFF</color>
-	<color name="white_transparent_50">#7EFFFFFF</color>
-	<color name="white_transparent_80">#32FFFFFF</color>
+	<color name="white_transparent_50">#D6DAE3</color>
+	<color name="white_transparent_80">#ECEEF4</color>
 	<color name="white_transparent_88">#1EFFFFFF</color>
 
-	<color name="divider">#12FFFFFF</color>
-	<color name="divider_light">#05FFFFFF</color>
+	<color name="divider">#E3E6EE</color>
+	<color name="divider_light">#ECEEF4</color>
 
 	<color name="icon_background">#f3f5f7</color>
-	<color name="highlight_light">#A1FFFFFF</color>
+	<color name="highlight_light">#33000000</color>
 
 	<!--reds-->
 	<color name="md_red_500">#e51c23</color>
@@ -56,9 +56,9 @@
 	<color name="md_green_600">#43A047</color>
 	<!--yellow -->
 	<!-- Brand accent (record coral); the old yellow name is kept so every accent use follows it. -->
-	<color name="rec_accent">#FF5A5F</color>
-	<color name="dialog_surface">#23262D</color>
-	<color name="dialog_text">#F2F3F5</color>
+	<color name="rec_accent">#E5484D</color>
+	<color name="dialog_surface">#FFFFFF</color>
+	<color name="dialog_text">#0E1222</color>
 	<color name="md_yellow_A700">@color/rec_accent</color>
 	<color name="md_yellow_800F">@color/rec_accent</color>
 	<color name="md_yellow_900F">#E04A50</color>
@@ -81,14 +81,16 @@
 	<color name="md_grey_100_75">#80F5F5F5</color>
 	<color name="md_grey_500">#9e9e9e</color>
 	<color name="md_grey_700">#616161</color>
-	<color name="md_grey_800xxx">#383838</color>
+	<color name="md_grey_800xxx">#E3E6EE</color>
 	<color name="md_grey_800xxxx">#282828</color>
 	<color name="md_grey_900x">#111111</color>
 	<color name="md_black_1000">#000000</color>
 
-	<color name="md_blue_gray_700">#131418</color>
-	<color name="md_blue_gray_500">#1F2128</color>
-    <color name="blue_ligth">#2A2D35</color>
+	<color name="md_blue_gray_700">#F3F4F8</color>
+	<color name="md_blue_gray_500">#FFFFFF</color>
+    <color name="blue_ligth">#FFFFFF</color>
 	<color name="transparent">#00000000</color>
 
+	<color name="ar_icon">#1A1D27</color>
+	<color name="ar_on_hero">#FFFFFF</color>
 </resources>

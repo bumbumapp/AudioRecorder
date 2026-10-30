@@ -43,4 +43,5 @@
 	<dimen name="panel_corner_radius">8dp</dimen>
 
 	<dimen name="menu_item_icon_size">24dp</dimen>
+	<dimen name="records_header_height">76dp</dimen>
 </resources>

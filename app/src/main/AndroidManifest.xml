@@ -25,9 +25,9 @@
         android:allowBackup="false"
         android:enableOnBackInvokedCallback="false"
         android:hardwareAccelerated="@bool/useHardwareAcceleration"
-        android:icon="@mipmap/app_logo_foreground"
+        android:icon="@mipmap/app_logo_bento"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/app_logo_round"
+        android:roundIcon="@mipmap/app_logo_bento_round"
         android:theme="@style/AppTheme">
         <receiver
             android:name=".RecordingWidget"

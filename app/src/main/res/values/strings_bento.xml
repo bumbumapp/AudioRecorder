@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="bento_home_title">Recorder</string>
+	<string name="bento_import">Import audio</string>
+	<string name="bento_more">More</string>
+	<string name="bento_play">Play</string>
+	<string name="bento_stop">Stop</string>
+	<string name="bento_record">Record</string>
+	<string name="greet_morning">Good morning</string>
+	<string name="greet_afternoon">Good afternoon</string>
+	<string name="greet_evening">Good evening</string>
+	<string name="bento_section_library">Library</string>
+	<string name="bento_section_recording">Recording</string>
+	<string name="bento_section_quality">Quality</string>
+	<string name="bento_section_storage">Storage</string>
+</resources>

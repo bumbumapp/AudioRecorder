@@ -89,13 +89,11 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 			textView.setLayoutParams(lp);
-			textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-
-			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, viewGroup.getContext().getResources().getDimension(R.dimen.text_medium));
-
-			int pad = (int) viewGroup.getContext().getResources().getDimension(R.dimen.spacing_small);
-			textView.setPadding(pad, pad, pad, pad);
-			textView.setGravity(Gravity.CENTER);
+			textView.setTextAppearance(R.style.Bento_Text_Section);
+			textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+			float d = viewGroup.getContext().getResources().getDisplayMetrics().density;
+			textView.setPadding((int) (22 * d), (int) (14 * d), (int) (22 * d), (int) (6 * d));
+			textView.setGravity(Gravity.START);
 
 			return new UniversalViewHolder(textView);
 		} else {
@@ -166,12 +164,12 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 				holder.btnBookmark.setImageResource(R.drawable.ic_bookmark_bordered_small);
 			}
 			if (viewHolder.getLayoutPosition() == activeItem) {
-				holder.view.setBackgroundResource(R.color.selected_item_color);
+				holder.view.setBackgroundResource(R.drawable.ar_item_bg_active);
 			} else {
 				if (selected.contains(p)) {
-					holder.view.setBackgroundResource(R.color.selected_item_color);
+					holder.view.setBackgroundResource(R.drawable.ar_item_bg_active);
 				} else {
-					holder.view.setBackgroundResource(android.R.color.transparent);
+					holder.view.setBackgroundResource(R.drawable.ar_item_bg);
 				}
 			}
 
@@ -500,7 +498,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 		container.setOrientation(LinearLayout.VERTICAL);
 
 		View headerView = new View(context);
-		int height = (int) context.getResources().getDimension(R.dimen.toolbar_height);
+		int height = (int) context.getResources().getDimension(R.dimen.records_header_height);
 		LinearLayout.LayoutParams headerParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, height);
 		headerView.setLayoutParams(headerParams);
@@ -624,7 +622,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 				OnItemLongClickListener longClickListener
 		) {
 			super(itemView);
-			view = itemView;
+			view = itemView.findViewById(R.id.container);
 			view.setOnClickListener(v -> {
 				int pos = getAbsoluteAdapterPosition();
 				if (pos != RecyclerView.NO_POSITION && onItemClickListener != null) {
