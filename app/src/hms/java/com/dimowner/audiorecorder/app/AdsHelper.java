@@ -7,6 +7,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -155,31 +157,42 @@ public final class AdsHelper {
         }
         final Context app = activity.getApplicationContext();
         interstitialAd = null;
+        // Huawei only reports load failures via onAdFailed: if show() never opens the ad, do not wait forever.
+        final boolean[] opened = {false};
         final boolean[] done = {false};
+        final Runnable finish = () -> {
+            if (done[0]) {
+                return;
+            }
+            done[0] = true;
+            preloadInterstitial(app, adUnitId);
+            if (afterAd != null) {
+                afterAd.run();
+            }
+        };
         ad.setAdListener(new AdListener() {
             @Override
+            public void onAdOpened() {
+                opened[0] = true;
+            }
+
+            @Override
             public void onAdClosed() {
-                finish();
+                finish.run();
             }
 
             @Override
             public void onAdFailed(int code) {
-                finish();
-            }
-
-            private void finish() {
-                if (done[0]) {
-                    return;
-                }
-                done[0] = true;
-                preloadInterstitial(app, adUnitId);
-                if (afterAd != null) {
-                    afterAd.run();
-                }
+                finish.run();
             }
         });
         lastInterstitialAt = now;
         ad.show(activity);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (!opened[0]) {
+                finish.run();
+            }
+        }, 3000L);
         return true;
     }
 
