@@ -1,0 +1,190 @@
+package com.dimowner.audiorecorder.app;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.SystemClock;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.dimowner.audiorecorder.BuildConfig;
+import com.dimowner.audiorecorder.R;
+import com.huawei.hms.ads.AdListener;
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.BannerAdSize;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.InterstitialAd;
+import com.huawei.hms.ads.NonPersonalizedAd;
+import com.huawei.hms.ads.RequestOptions;
+import com.huawei.hms.ads.banner.BannerView;
+
+/**
+ * Huawei AppGallery build: same API and interstitial cap as the Play build, but served by Huawei Ads
+ * (Petal) instead of AdMob. Only non-personalized ads are requested, so no consent form is needed.
+ * The AdMob unit IDs passed in by callers are ignored; the Huawei slot IDs come from resources.
+ */
+public final class AdsHelper {
+    private static final String TAG = "AdsHelper";
+
+    /** Interstitial only after a finished recording; at most one per 8 minutes (and none in the first 8 after start). */
+    public static final long INTERSTITIAL_MIN_INTERVAL_MS = 8 * 60_000L;
+
+    private static volatile boolean sdkReady;
+    private static InterstitialAd interstitialAd;
+    private static long lastInterstitialAt = -1L;
+
+    public interface OnAdsReady {
+        void onAdsReady();
+    }
+
+    private AdsHelper() {
+    }
+
+    /** Initializes Huawei Ads (non-personalized only) and calls {@code onReady} once it is ready. */
+    public static void gatherConsent(@NonNull Activity activity, @NonNull OnAdsReady onReady) {
+        if (lastInterstitialAt < 0) {
+            lastInterstitialAt = SystemClock.elapsedRealtime();
+        }
+        if (activity.isFinishing()) {
+            return;
+        }
+        if (!sdkReady) {
+            try {
+                HwAds.init(activity.getApplicationContext());
+                RequestOptions options = HwAds.getRequestOptions().toBuilder()
+                        .setNonPersonalizedAd(NonPersonalizedAd.ALLOW_NON_PERSONALIZED)
+                        .build();
+                HwAds.setRequestOptions(options);
+                sdkReady = true;
+            } catch (RuntimeException e) {
+                Log.w(TAG, "Huawei Ads init failed", e);
+                return;
+            }
+        }
+        onReady.onAdsReady();
+    }
+
+    public static boolean canRequestAds(@NonNull Context context) {
+        return sdkReady;
+    }
+
+    public static boolean isPrivacyOptionsRequired(@NonNull Context context) {
+        return false;
+    }
+
+    public static void showPrivacyOptions(@NonNull Activity activity) {
+    }
+
+    private static String slot(Context context, int real, int test) {
+        return context.getString(BuildConfig.DEBUG ? test : real);
+    }
+
+    /** Adds a Huawei banner to {@code container}; returns null if ads are not ready. */
+    @Nullable
+    public static View loadBanner(@NonNull Activity activity, @NonNull ViewGroup container, @NonNull String adUnitId) {
+        if (!canRequestAds(activity)) {
+            return null;
+        }
+        BannerView banner = new BannerView(activity);
+        banner.setAdId(slot(activity, R.string.hms_banner_id, R.string.hms_test_banner_id));
+        DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
+        int widthDp = (int) (metrics.widthPixels / metrics.density);
+        banner.setBannerAdSize(BannerAdSize.getCurrentDirectionBannerSize(activity, widthDp));
+        container.removeAllViews();
+        container.addView(banner);
+        banner.loadAd(new AdParam.Builder().build());
+        return banner;
+    }
+
+    /** Loads one interstitial in the background if none is cached or loading. */
+    public static void preloadInterstitial(@NonNull Context context, @NonNull String adUnitId) {
+        if (interstitialAd != null || !canRequestAds(context)) {
+            return;
+        }
+        Context app = context.getApplicationContext();
+        InterstitialAd ad = new InterstitialAd(app);
+        ad.setAdId(slot(app, R.string.hms_interstitial_id, R.string.hms_test_interstitial_id));
+        ad.setAdListener(new AdListener() {
+            @Override
+            public void onAdFailed(int code) {
+                if (interstitialAd == ad) {
+                    interstitialAd = null;
+                }
+                Log.d(TAG, "Interstitial failed: " + code);
+            }
+        });
+        interstitialAd = ad;
+        ad.loadAd(new AdParam.Builder().build());
+    }
+
+    /**
+     * Shows the cached interstitial at a natural break point if the frequency cap allows it.
+     * Returns true if an ad is being shown.
+     */
+    public static boolean showInterstitialIfReady(@NonNull Activity activity, @NonNull String adUnitId) {
+        return showInterstitialIfReady(activity, adUnitId, null);
+    }
+
+    /**
+     * Like {@link #showInterstitialIfReady(Activity, String)}; {@code afterAd} runs when the ad is closed,
+     * or immediately if no ad is shown.
+     */
+    public static boolean showInterstitialIfReady(@NonNull Activity activity, @NonNull String adUnitId,
+                                                  @Nullable Runnable afterAd) {
+        boolean shown = showInterstitialInternal(activity, adUnitId, afterAd);
+        if (!shown && afterAd != null) {
+            afterAd.run();
+        }
+        return shown;
+    }
+
+    private static boolean showInterstitialInternal(Activity activity, String adUnitId, @Nullable Runnable afterAd) {
+        long now = SystemClock.elapsedRealtime();
+        InterstitialAd ad = interstitialAd;
+        if (ad == null) {
+            preloadInterstitial(activity, adUnitId);
+            return false;
+        }
+        if (!ad.isLoaded() || !isIntervalElapsed(lastInterstitialAt, now, INTERSTITIAL_MIN_INTERVAL_MS)
+                || activity.isFinishing()) {
+            return false;
+        }
+        final Context app = activity.getApplicationContext();
+        interstitialAd = null;
+        final boolean[] done = {false};
+        ad.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                finish();
+            }
+
+            @Override
+            public void onAdFailed(int code) {
+                finish();
+            }
+
+            private void finish() {
+                if (done[0]) {
+                    return;
+                }
+                done[0] = true;
+                preloadInterstitial(app, adUnitId);
+                if (afterAd != null) {
+                    afterAd.run();
+                }
+            }
+        });
+        lastInterstitialAt = now;
+        ad.show(activity);
+        return true;
+    }
+
+    /** Frequency cap: true when at least {@code minIntervalMs} passed since {@code lastAt} (negative = never). */
+    static boolean isIntervalElapsed(long lastAt, long now, long minIntervalMs) {
+        return lastAt < 0 || now - lastAt >= minIntervalMs;
+    }
+}
