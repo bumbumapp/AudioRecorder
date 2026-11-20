@@ -11,6 +11,8 @@ def HMS_TEST_BANNER_ID = 'testw6vs28auh3'
 def HMS_TEST_INTERSTITIAL_ID = 'testb4znbuh3n2'
 def HMS_BANNER_ID = hmsAdId('HMS_BANNER_ID', 'e3oqb6ggj8')
 def HMS_INTERSTITIAL_ID = hmsAdId('HMS_INTERSTITIAL_ID', 'k6s0ov3auo')
+def HMS_SPLASH_ID = hmsAdId('HMS_SPLASH_ID', 'k1y6b59hyx')
+def HMS_TEST_SPLASH_ID = 'testq6zq98hecj'
 // google-services.json is not committed to this repo. Firebase plugins are applied only when the
 // file is present (add it before building the Play release so Crashlytics/Analytics work).
 if (file('google-services.json').exists()) {
@@ -29,8 +31,8 @@ android {
 		applicationId "com.bumbumapps.audiorecorderpro"
 		minSdk 24
 		targetSdk 36
-		versionCode 13
-		versionName "2.0.1"
+		versionCode 14
+		versionName "2.0.2"
 	}
 
 	buildFeatures {
@@ -49,6 +51,8 @@ android {
 			dimension 'store'
 			resValue 'string', 'hms_banner_id', HMS_BANNER_ID
 			resValue 'string', 'hms_interstitial_id', HMS_INTERSTITIAL_ID
+			resValue 'string', 'hms_splash_id', HMS_SPLASH_ID
+			resValue 'string', 'hms_test_splash_id', HMS_TEST_SPLASH_ID
 			resValue 'string', 'hms_test_banner_id', HMS_TEST_BANNER_ID
 			resValue 'string', 'hms_test_interstitial_id', HMS_TEST_INTERSTITIAL_ID
 		}

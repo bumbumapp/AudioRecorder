@@ -62,6 +62,9 @@ public final class AdsHelper {
                         .build();
                 HwAds.setRequestOptions(options);
                 sdkReady = true;
+                if (activity instanceof com.dimowner.audiorecorder.app.main.MainActivity) {
+                    PetalSplash.maybeShow(activity, true);
+                }
             } catch (RuntimeException e) {
                 Log.w(TAG, "Huawei Ads init failed", e);
                 return;
@@ -152,7 +155,7 @@ public final class AdsHelper {
             return false;
         }
         if (!ad.isLoaded() || !isIntervalElapsed(lastInterstitialAt, now, INTERSTITIAL_MIN_INTERVAL_MS)
-                || activity.isFinishing()) {
+                || activity.isFinishing() || PetalSplash.shownRecently()) {
             return false;
         }
         final Context app = activity.getApplicationContext();
